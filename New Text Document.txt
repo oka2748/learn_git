@@ -1,0 +1,20 @@
+Algorithm CheckpointAlgorithm
+Input: sentence (string)
+Output: length (integer), wordCount (integer), vowelCount (integer)
+
+Variables:
+    length <- 0
+    wordCount <- 0
+    vowelCount <- 0
+
+For each character in the sentence:
+    Increment length by 1
+
+    If the character is a letter:
+        If the character is a vowel (a, e, i, o, u, A, E, I, O, U):
+            Increment vowelCount by 1
+
+    If the character is a space:
+        Increment wordCount by 1
+
+Output length, wordCount, and vowelCount
