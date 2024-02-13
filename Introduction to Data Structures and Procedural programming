@@ -1,0 +1,62 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+
+// Function to find sum of distinct elements from two sets
+int findDistinctSum(const std::vector<int>& set1, const std::vector<int>& set2) {
+    std::unordered_set<int> distinctElements;
+
+    // Add elements from set1
+    for (int num : set1) {
+        distinctElements.insert(num);
+    }
+
+    // Add elements from set2
+    for (int num : set2) {
+        distinctElements.insert(num);
+    }
+
+    // Calculate sum of distinct elements
+    int sum = 0;
+    for (int num : distinctElements) {
+        sum += num;
+    }
+
+    return sum;
+}
+
+// Function to calculate dot product of two vectors
+int dotProduct(const std::vector<int>& v1, const std::vector<int>& v2) {
+    int product = 0;
+    for (size_t i = 0; i < v1.size(); ++i) {
+        product += v1[i] * v2[i];
+    }
+    return product;
+}
+
+// Function to check if two vectors are orthogonal
+bool areOrthogonal(const std::vector<std::vector<int>>& vectors) {
+    for (size_t i = 0; i < vectors.size(); ++i) {
+        for (size_t j = i + 1; j < vectors.size(); ++j) {
+            if (dotProduct(vectors[i], vectors[j]) != 0) {
+                return false; // Not orthogonal
+            }
+        }
+    }
+    return true; // All pairs are orthogonal
+}
+
+int main() {
+    // Problem 1: Find sum of distinct elements from two sets
+    std::vector<int> set1 = {3, 1, 7, 9};
+    std::vector<int> set2 = {2, 4, 1, 9, 3};
+    int distinctSum = findDistinctSum(set1, set2);
+    std::cout << "Problem 1: Sum of distinct elements = " << distinctSum << std::endl;
+
+    // Problem 2: Check if vectors are orthogonal
+    std::vector<std::vector<int>> vectors = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+    bool orthogonal = areOrthogonal(vectors);
+    std::cout << "Problem 2: Vectors are " << (orthogonal ? "orthogonal" : "not orthogonal") << std::endl;
+
+    return 0;
+}
