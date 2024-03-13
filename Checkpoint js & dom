@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart-item button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="cart">
+        <!-- Cart items will be dynamically added here -->
+    </div>
+    <script>
+        const items = [
+            { id: 1, name: 'Item 1', price: 10, liked: false },
+            { id: 2, name: 'Item 2', price: 20, liked: false },
+            { id: 3, name: 'Item 3', price: 30, liked: false },
+        ];
+
+        function renderCart() {
+            const cart = document.getElementById('cart');
+            cart.innerHTML = '';
+
+            let totalPrice = 0;
+
+            items.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+
+                const quantity = document.createElement('input');
+                quantity.type = 'number';
+                quantity.value = item.quantity || 1;
+                quantity.min = 1;
+                quantity.addEventListener('change', () => {
+                    item.quantity = parseInt(quantity.value);
+                    renderCart();
+                });
+
+                const name = document.createElement('span');
+                name.textContent = item.name;
+
+                const price = document.createElement('span');
+                price.textContent = `$${item.price * (item.quantity || 1)}`;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', () => {
+                    items.splice(items.indexOf(item), 1);
+                    renderCart();
+                });
+
+                const likeButton = document.createElement('button');
+                likeButton.textContent = item.liked ? '♥' : '♡';
+                likeButton.addEventListener('click', () => {
+                    item.liked = !item.liked;
+                    likeButton.textContent = item.liked ? '♥' : '♡';
+                });
+
+                cartItem.appendChild(quantity);
+                cartItem.appendChild(name);
+                cartItem.appendChild(price);
+                cartItem.appendChild(deleteButton);
+                cartItem.appendChild(likeButton);
+
+                cart.appendChild(cartItem);
+
+                totalPrice += item.price * (item.quantity || 1);
+            });
+
+            const total = document.createElement('div');
+            total.textContent = `Total: $${totalPrice}`;
+            cart.appendChild(total);
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>
