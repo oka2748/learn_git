@@ -1,0 +1,58 @@
+export const product = {
+  name: "Product Name",
+  price: 100,
+  description: "Product Description",
+  image: "https://via.placeholder.com/150",
+};
+
+
+import React from "react";
+import { Card } from "react-bootstrap";
+
+const Name = ({ product }) => {
+  return <Card.Title>{product.name}</Card.Title>;
+};
+
+export default Name;
+
+
+import React from "react";
+import { Card } from "react-bootstrap";
+
+const Price = ({ product }) => {
+  return <Card.Text>Price: ${product.price}</Card.Text>;
+};
+
+export default Price;
+
+
+import React from "react";
+import { Card } from "react-bootstrap";
+
+const Description = ({ product }) => {
+  return <Card.Text>{product.description}</Card.Text>;
+};
+
+export default Description;
+
+
+import React from "react";
+import { Card } from "react-bootstrap";
+
+const Image = ({ product }) => {
+  return <Card.Img variant="top" src={product.image} />;
+};
+
+export default Image;
+
+import React from "react";
+import { Card } from "react-bootstrap";
+import Name from "./Name";
+import Price from "./Price";
+import Description from "./Description";
+import Image from "./Image";
+import { product } from "./product";
+
+function App() {
+  const firstName = "John"; // or any
+
