@@ -1,0 +1,34 @@
+export const players = [
+  {
+    name: "Lionel Messi",
+    team: "Paris Saint-Germain",
+    nationality: "Argentina",
+    jerseyNumber: 10,
+    age: 34,
+    imageUrl: "https://cdn.images.express.co.uk/img/dynamic/67/590x/Lionel-Messi-823385.jpg",
+  },
+  {
+    name: "Cristiano Ronaldo",
+    team: "Juventus",
+    nationality: "Portugal",
+    jerseyNumber: 7,
+    age: 36,
+    imageUrl: "https://cdn.images.express.co.uk/img/dynamic/67/590x/Cristiano-Ronaldo-823386.jpg",
+  },
+  {
+    name: "Neymar Jr.",
+    team: "Paris Saint-Germain",
+    nationality: "Brazil",
+    jerseyNumber: 10,
+    age: 29,
+    imageUrl: "https://cdn.images.express.co.uk/img/dynamic/67/590x/Neymar-823387.jpg",
+  },
+  {
+    name: "Mohamed Salah",
+    team: "Liverpool",
+    nationality: "Egypt",
+    jerseyNumber: 11,
+    age: 30,
+    imageUrl: "https://cdn.images.express.co.uk/img/dynamic/67/590x/Mohamed-Salah-823388.jpg",
+  },
+];
