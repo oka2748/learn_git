@@ -1,0 +1,137 @@
+import React from 'react';
+
+const MovieCard = ({ movie, onClick }) => {
+  return (
+    <div className="movie-card" onClick={() => onClick(movie)}>
+      <img src={movie.posterURL} alt={movie.title} />
+      <h3>{movie.title}</h3>
+      <p>Rating: {movie.rating}</p>
+    </div>
+  );
+};
+
+export default MovieCard;
+
+
+
+import React from 'react';
+import MovieCard from './MovieCard';
+
+const MovieList = ({ movies, onClick }) => {
+  return (
+    <div className="movie-list">
+      {movies.map(movie => (
+        <MovieCard key={movie.title} movie={movie} onClick={onClick} />
+      ))}
+    </div>
+  );
+};
+
+export default MovieList;
+
+
+
+import React, { useState } from 'react';
+
+const MovieFilter = ({ onFilter }) => {
+  const [title, setTitle] = useState('');
+  const [rating, setRating] = useState('');
+
+  const handleFilter = () => {
+    onFilter({ title, rating });
+  };
+
+  return (
+    <div className="movie-filter">
+      <input
+        type="text"
+        placeholder="Filter by Title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Filter by Rating"
+        value={rating}
+        onChange={e => setRating(e.target.value)}
+      />
+      <button onClick={handleFilter}>Filter</button>
+    </div>
+  );
+};
+
+export default MovieFilter;
+
+
+
+import React from 'react';
+
+const MovieDetails = ({ movie, onClose }) => {
+  return (
+    <div className="movie-details">
+      <h2>{movie.title}</h2>
+      <p>{movie.description}</p>
+      <iframe src={movie.trailerLink} title="Trailer" />
+      <button onClick={onClose}>Close</button>
+    </div>
+  );
+};
+
+export default MovieDetails;
+
+
+
+
+import React, { useState } from 'react';
+import MovieList from './MovieList';
+import MovieFilter from './MovieFilter';
+import MovieDetails from './MovieDetails';
+
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const handleFilter = ({ title, rating }) => {
+    let filtered = [...movies];
+    if (title) {
+      filtered = filtered.filter(movie =>
+        movie.title.toLowerCase().includes(title.toLowerCase())
+      );
+    }
+    if (rating) {
+      filtered = filtered.filter(movie => movie.rating >= rating);
+    }
+    setFilteredMovies(filtered);
+  };
+
+  const handleAddMovie = (title, description, posterURL, rating, trailerLink) => {
+    const newMovie = {
+      title,
+      description,
+      posterURL,
+      rating,
+      trailerLink
+    };
+    setMovies([...movies, newMovie]);
+  };
+
+  const handleMovieClick = movie => {
+    setSelectedMovie(movie);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedMovie(null);
+  };
+
+  return (
+    <div className="app">
+      <h1>Movie App</h1>
+      <MovieFilter onFilter={handleFilter} />
+      <MovieList movies={filteredMovies.length ? filteredMovies : movies} onClick={handleMovieClick} />
+      {selectedMovie && <MovieDetails movie={selectedMovie} onClose={handleCloseDetails} />}
+    </div>
+  );
+};
+
+export default App;
