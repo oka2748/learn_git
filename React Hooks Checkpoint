@@ -6,6 +6,9 @@ const MovieCard = ({ movie }) => {
       <img src={movie.Poster} alt="movie" />
       <div className="overlay d-flex align-items-center justify-content-center">
         <button className="favourite-btn">Add to Favourites</button>
+         <h2>{movie.title}</h2>
+      <p>{movie.description}</p>
+      <span>Rating: {movie.rating}</span>
       </div>
     </div>
   );
@@ -16,18 +19,30 @@ export default MovieCard;
 
 import React from 'react';
 
-const MovieList = ({ movies, favouriteComponent: FavouriteComponent }) => {
+const MovieList = ({ movies, onAddMovie, onFilterMovies }) => {
   return (
-    <>
-      {movies.map((movie, index) => (
-        <div className="image-container d-flex justify-content-start m-3">
-          <img src={movie.Poster} alt="movie" />
-          <div className="overlay d-flex align-items-center justify-content-center">
-            <FavouriteComponent />
-          </div>
-        </div>
+    <div className="movie-list">
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Filter by title..."
+          onChange={(e) => onFilterMovies('title', e.target.value)}
+        />
+        <select onChange={(e) => onFilterMovies('rating', e.target.value)}>
+          <option value="">Filter by rating...</option>
+          <option value="G">G</option>
+          <option value="PG">PG</option>
+          <option value="PG-13">PG-13</option>
+          <option value="R">R</option>
+        </select>
+      </div>
+      {movies.map((movie) => (
+        <MovieCard key={movie.id} movie={movie} />
       ))}
-    </>
+      <button className="add-movie-btn" onClick={onAddMovie}>
+        Add Movie
+      </button>
+    </div>
   );
 };
 
