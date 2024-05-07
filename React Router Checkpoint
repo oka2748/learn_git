@@ -1,137 +1,334 @@
+// import logo from './logo.svg';
 import React from 'react';
+import "./App.css";
+import Header from './header';
+import Post from "./post1"
+import Sidemenu from './sidemenu';
+import Memo from './memo/memo';
+import REF from './ref/ref.jsx'
+import Effect from './effect/effect.js';
+// import State from './state';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Woman from './sidemenu/woman.jsx';
+import Tshert from './sidemenu/tshert.jsx';
+import Home from './Home.jsx';
 
-const MovieCard = ({ movie, onClick }) => {
+
+
+function App() {
   return (
-    <div className="movie-card" onClick={() => onClick(movie)}>
-      <img src={movie.posterURL} alt={movie.title} />
-      <h3>{movie.title}</h3>
-      <p>Rating: {movie.rating}</p>
-    </div>
-  );
-};
+    <div className="App">
+      <Header />
 
-export default MovieCard;
+      <div style={{display:'flex', justifyContent:'center', }}>
 
+      <div style={{display:'flex', width:'60%', }}>
 
+      <div style={{width: '70%', }}>
+    
+      <Post postName="product" postBody="img"/>
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+    
+      </div>
 
-import React from 'react';
-import MovieCard from './MovieCard';
-
-const MovieList = ({ movies, onClick }) => {
-  return (
-    <div className="movie-list">
-      {movies.map(movie => (
-        <MovieCard key={movie.title} movie={movie} onClick={onClick} />
-      ))}
-    </div>
-  );
-};
-
-export default MovieList;
-
+      <BrowserRouter>
+    <Routes>
+    <Route path='/' element={ <Home/> } />
+    <Route path='./sidemenu/woman.jsx' element={ <Woman/> } />
+    <Route path='./sidemenu/tshert.jsx' element={ <Tshert/> } />
+    </Routes>
+    </BrowserRouter>
 
 
-import React, { useState } from 'react';
+      <div style={{width:'30%', }}>
+        <Sidemenu />
+      </div>
 
-const MovieFilter = ({ onFilter }) => {
-  const [title, setTitle] = useState('');
-  const [rating, setRating] = useState('');
+      </div>
+        {/* <State /> */}
+      </div>
+      
+      <div>
+      <Effect />
+      </div>
 
-  const handleFilter = () => {
-    onFilter({ title, rating });
-  };
+        <tr></tr>
+        
+        <div style={{display:'flex', }}>
+        <REF />
+        </div>
 
-  return (
-    <div className="movie-filter">
-      <input
-        type="text"
-        placeholder="Filter by Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Filter by Rating"
-        value={rating}
-        onChange={e => setRating(e.target.value)}
-      />
-      <button onClick={handleFilter}>Filter</button>
-    </div>
-  );
-};
-
-export default MovieFilter;
-
-
-
-import React from 'react';
-
-const MovieDetails = ({ movie, onClose }) => {
-  return (
-    <div className="movie-details">
-      <h2>{movie.title}</h2>
-      <p>{movie.description}</p>
-      <iframe src={movie.trailerLink} title="Trailer" />
-      <button onClick={onClose}>Close</button>
-    </div>
-  );
-};
-
-export default MovieDetails;
-
-
-
-
-import React, { useState } from 'react';
-import MovieList from './MovieList';
-import MovieFilter from './MovieFilter';
-import MovieDetails from './MovieDetails';
-
-const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
-  const handleFilter = ({ title, rating }) => {
-    let filtered = [...movies];
-    if (title) {
-      filtered = filtered.filter(movie =>
-        movie.title.toLowerCase().includes(title.toLowerCase())
-      );
-    }
-    if (rating) {
-      filtered = filtered.filter(movie => movie.rating >= rating);
-    }
-    setFilteredMovies(filtered);
-  };
-
-  const handleAddMovie = (title, description, posterURL, rating, trailerLink) => {
-    const newMovie = {
-      title,
-      description,
-      posterURL,
-      rating,
-      trailerLink
-    };
-    setMovies([...movies, newMovie]);
-  };
-
-  const handleMovieClick = movie => {
-    setSelectedMovie(movie);
-  };
-
-  const handleCloseDetails = () => {
-    setSelectedMovie(null);
-  };
-
-  return (
-    <div className="app">
-      <h1>Movie App</h1>
-      <MovieFilter onFilter={handleFilter} />
-      <MovieList movies={filteredMovies.length ? filteredMovies : movies} onClick={handleMovieClick} />
-      {selectedMovie && <MovieDetails movie={selectedMovie} onClose={handleCloseDetails} />}
-    </div>
-  );
-};
+        <div>
+          <Memo />
+        </div>
 
 export default App;
+
+
+
+
+
+import "./Button.css"
+export default function TagButton({title="none" , children}){
+return(
+<button className="button" >{title} {children} </button>
+    );
+}
+
+
+
+
+import TagButton from "./TagButton";
+
+export default function Sidemenu(){
+    return(
+        <div style={{margin:'25px', border:"solid teal 5px"}}>
+            <TagButton title="man"/>
+            <TagButton title="woman"/>
+
+            <TagButton title="tshert">
+                <div>
+                
+                </div>
+            </TagButton >
+            
+            <TagButton title="another"/>
+            <TagButton />
+            <TagButton />
+            
+        </div>
+    );
+}
+
+
+
+
+
+
+export default function Post({postName="product", postBody="none" }){
+    return(
+        <div style={{
+            padding: '10px',
+            border: 'solid teal 5px',
+            margin: '25px',
+            
+        }}>
+            <h2>{postName}</h2>
+            <hr/>
+            <p>{postBody}</p>
+        </div>
+    );
+}
+
+
+
+
+
+
+export default function Header()    {
+    return(
+        <div style={{
+            width: "100%" , 
+            background: "teal" ,
+            height: "200px" ,
+            color: "white" ,
+            display: "flex" ,
+            justifyContent: "center" ,
+            alignItems: "center" ,
+            fontSize: "30px",
+            boxShadow: "0px 5px 13px rgba(0 ,0 ,0 ,0.4)",
+        }}>
+            <h1>venom stot</h1>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+.button{
+    background-color: purple;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.3;
+}
+
+.button:hover {
+    background-color: rgb(88, 0, 88);
+}
+
+
+
+
+
+
+
+import React from 'react'
+
+export default function Woman() {
+  return (
+    <div>
+        <h1>clickme </h1>
+    </div>
+  )
+}
+
+
+
+
+
+import { useMemo, useState } from "react"
+
+export default function Memo() {
+  
+    const[counterone, setcounterone]=useState(0)
+    const[countertwo, setcountertwo]=useState(0)
+
+    const changeone = () => {setcounterone(prev=>prev +1)}
+    const changetwo = () => {setcountertwo(prev=>prev +1)}
+
+    const iseven = useMemo ( () => {
+        let i = 0
+        while (i < 2000000) i++
+        return counterone % 2 === 0
+    },[counterone]
+)
+
+    return (
+    <div>
+
+        <button onClick={changeone}>{counterone}</button>
+        {iseven ? 'even' : 'odd'}
+        <button onClick={changetwo}>{countertwo}</button>
+
+    </div>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+import { useEffect, useState } from "react";
+
+export default function Effect ()  {
+
+    const [counter,setcounter] = useState (0)
+
+    useEffect(()=>{
+        console.log("mount")
+    }, [counter])
+
+    const updateup = () => setcounter (prev => prev + 1)
+    const updatedown = () => setcounter (prev => prev - 1)
+
+    return (
+        <div>
+            <h1>{counter}</h1>
+            <button onClick={updateup}>+</button>
+            <button onClick={updatedown}>-</button>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+import { useEffect, useRef, useState } from "react"
+
+export default function REF() {
+  
+  const lastpara = useRef ()
+
+  const movedown = () => {
+    console.log(lastpara.current)
+  }
+
+  const [render, setrender] = useState (0)
+
+  const count = useRef (0)
+
+  useEffect (()=>{
+    count.current = count.current + 1
+    console.log(count.current)
+  },[render])
+
+  return (
+    <div>
+
+      <h1>welcome</h1>
+      
+      <button onClick={()=>{setrender(prev=>prev + 1)}}>restart</button>
+    <h1>{render}</h1>
+
+      <button onClick={movedown}>go to down</button>
+
+      <section>
+        <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim fuga voluptatibus
+          quaerat iusto hic praesentium sapiente ipsam? Ea omnis ut ipsum,
+          eveniet cumque eligendi similique natus sequi, temporibus quas nam!</p>
+      </section>
+
+      <section>
+      <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro ipsa repellendus, odio ab ad, 
+          quas modi architecto similique, deleniti error quis
+          quibusdam in voluptatum impedit accusantium sint esse adipisci veritatis!</p>
+      </section>
+      
+      <section>
+      <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt hic cumque ipsa ipsum quod ducimus cupiditate nesciunt
+          fugiat officiis repellendus! Eos totam modi natus minus
+          reprehenderit, est accusantium minima cumque!</p>
+      </section>
+      
+      <section>
+      <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit aspernatur minima expedita alias tempora 
+          rerum porro ut sit voluptatem ratione sed ipsum, delectus
+          nostrum possimus cumque soluta blanditiis quam. Fugiat?</p>
+      </section>
+      
+      <section>
+      <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa explicabo quae, repellendus doloremque dignissimos
+        est assumenda labore quidem a excepturi, dolores neque ducimus.
+        Dolorum modi corrupti accusamus quis illo minima!</p>
+      </section>
+      
+      <section>
+      <img src="https://images.pexels.com/photos/1402787/pexels-photo-1402787.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p ref={lastpara}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quisquam architecto esse voluptatibus 
+          eligendi vel numquam quam mollitia veniam, cum quo, 
+          animi quasi nemo, laboriosam aspernatur quas? Culpa, laboriosam fuga.</p>
+      </section>
+
+      </div>
+  )
+}
